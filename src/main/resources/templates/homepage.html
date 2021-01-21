@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hatke cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link rel="stylesheet" th:href="@{/css/card.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("https://www.setaswall.com/wp-content/uploads/2017/07/Coffee-Background-39-2560x1600.jpg");
+            height: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero-text {
+            text-align: left;
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+
+        .hero-text button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 10px 25px;
+            color: black;
+            background-color:peachpuff;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .hero-text button:hover {
+            background-color: white;
+            color: green;
+        }
+    </style>
+</head>
+
+<body class="quicksand">
+
+<!-- navbar -->
+<nav th:fragment="navbar" style="background-color: white" class="navbar sticky-top navbar-expand-lg navbar-dark bg-theme1">
+    <a href="/homepage" class="active">
+        <img th:src="@{/images/logo.png}" alt="HTML tutorial" style="width:120px;height:100px;">
+    </a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" area-expanded="false" aria-label="Toggle navigation" name="button">
+        <i class="fas fa-bars navbar-hamburger-icon"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active  mr-3">
+                <a style="color:red; font-size:150%;font-family: Dyuthi" th:href="@{/homepage}">Home</a>
+            </li>
+            <li class="nav-item mr-3">
+                <a style="color:red; font-size:150%;font-family: Dyuthi" href="/menu" >Menu</a>
+            </li>
+            <li class="nav-item mr-3">
+                <a style="color:red; font-size:150%;font-family: Dyuthi" href="/Offers" >ComboOffers</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" th:if="${loginStatus} and ${user.getRole()}=='client' ">
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/cart" style="color:red; font-size:150%;font-family: Dyuthi" >MyCart</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/orderHistory" style="color:red; font-size:150%;font-family: Dyuthi" >OrderHistory</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a style="color:red; font-size:150%;font-family: Dyuthi" href="/editProfile" >EditProfile</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" th:if="${loginStatus} and ${user.getRole()}=='admin' ">
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/setOffers" style="color:red; font-size:150%;font-family: Dyuthi" > SetCombo</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/addItem" style="color:red; font-size:150%;font-family: Dyuthi" >AddItem</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/feedback" style="color:red; font-size:150%;font-family: Dyuthi" >Feedbacks</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/editItems" style="color:red; font-size:150%;font-family: Dyuthi" >EditItem</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/addCategory" style="color:red; font-size:150%;font-family: Dyuthi" >AddCategory</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/editCategory" style="color:red; font-size:150%;font-family: Dyuthi" >EditCategory</a>
+            </li>
+            <li class="nav-item ml-2 mr-2" >
+                <a href="/allOrders" style="color:red; font-size:150%;font-family: Dyuthi">AllOrders</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-2 " th:if="not ${loginStatus}">
+                <a href="/login" style="color:red; font-size:150%;font-family: Dyuthi">Login</a>
+            </li>
+            <li class="nav-item ml-2 " th:if="not ${loginStatus}">
+                <a href="/register" style="color:red; font-size:150%;font-family: Dyuthi">Register</a>
+            </li>
+            <li class="nav-item ml-2 " th:if="${loginStatus}" >
+                <a th:href="@{/logout}" style="color:red; font-size:150%;font-family: Dyuthi">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--hero-image-->
+<div class="hero-image" >
+    <div class="hero-text">
+        <h1 style="font-size:50px">TREAT YOURSELVES AT HATKE!!!</h1>
+        <p style="margin-left: 200px"><i>Quarantine and chill with our lipsmacking dishes</i></p>
+        <button  style="margin-left: 170px"><a th:href="@{/menu}">Order now</a></button>
+    </div>
+</div>
+<div style="align-content: center;margin-top: 100px;margin-bottom: 100px">
+    <header style="font-family: Dyuthi;font-size: 200%;"><pre><i> <u>OUR</u>    <u>SPECIALITIES</u></i></pre></header>
+</div>
+<!--carousel-->
+<div  class="container" >
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="row">
+                    <div class="column" >
+                        <div class="card" style="background-color: white">
+                            <img th:src="@{/images/dish2.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                            <h1 style="font-family: Dyuthi;color: red">CHILLI NUGGETS</h1>
+                        </div>
+                    </div>
+                    <div class="column" >
+                        <div class="card" style="background-color: white">
+                            <img th:src="@{/images/dish4.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                            <h1 style="font-family: Dyuthi;color: red">GRAVY MOMO'S</h1>
+                        </div>
+                    </div>
+                    <div class="column" >
+                        <div class="card" style="background-color: white">
+                            <img th:src="@{/images/dish5.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                            <h1 style="font-family: Dyuthi;color: red">CARAMEL POPSCOTCH SHAKE</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                    <div class="row">
+                        <div class="column" >
+                            <div class="card" style="background-color: white">
+                                <img th:src="@{/images/dish2.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                                <h1 style="font-family: Dyuthi;color: red">CHILLI NUGGETS</h1>
+                            </div>
+                        </div>
+                        <div class="column" >
+                            <div class="card" style="background-color: white">
+                                <img th:src="@{/images/dish4.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                                <h1 style="font-family: Dyuthi;color: red">GRAVY MOMO'S</h1>
+                            </div>
+                        </div>
+                        <div class="column" >
+                            <div class="card" style="background-color: white">
+                                <img th:src="@{/images/dish5.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                                <h1 style="font-family: Dyuthi;color: red">CARAMEL POPSCOTCH SHAKE</h1>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+            <div class="item">
+                <div class="row">
+                    <div class="column" >
+                        <div class="card" style="background-color: white">
+                            <img th:src="@{/images/dish2.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                            <h1 style="font-family: Dyuthi;color: red">CHILLI NUGGETS</h1>
+                        </div>
+                    </div>
+                    <div class="column" >
+                        <div class="card" style="background-color: white">
+                            <img th:src="@{/images/dish4.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                            <h1 style="font-family: Dyuthi;color: red">GRAVY MOMO'S</h1>
+                        </div>
+                    </div>
+                    <div class="column" >
+                        <div class="card" style="background-color: white">
+                            <img th:src="@{/images/dish5.png}" alt="Girl in a jacket" width="100%" class="responsive">
+                            <h1 style="font-family: Dyuthi;color: red">CARAMEL POPSCOTCH SHAKE</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<br><br><div th:if="${loginStatus} and ${user.getRole()}=='client' " style="margin-left: 120px;font-family: Dyuthi"> Ever Visited Hatke?<a th:href="@{/addFeedback}">Give your valuable feedback</a></div>
+<div  th:if="${loginStatus} and ${user.getRole()}=='client' "  style="margin-left: 120px;font-family: Dyuthi"><a th:href="@{/addQuestion}">Ask your query</a></div>
+<!-- important links -->
+<div th:fragment="footer" class="mt-5 bg-bottom">
+    <footer class="container text-center text-white pt-5 pb-3">
+        <img th:src="@{/images/logo.png}" alt="HTML tutorial" style="width:120px;height:80px;">
+
+        <br>
+        <div style="color: #E6E4E4" class="pt-2 pb-1">amankalra0000@gmail.com</div>
+        <div style="color: #E6E4E4" class="pt-2 pb-1">7009211803,9717088720</div>
+        Follow us on
+        <a href="https://www.instagram.com/hatke.official/" class="fa fa-instagram"></a>
+        <br>
+        <hr class="bg-light mx-5"/>
+        <p class="pt-3" style="color: #E6E4E4">
+            Near Roadways Workshop,Court Road,Saharanpur,UP-247001
+        </p>
+    </footer>
+</div>
+
+    <!-- fontawesome script -->
+    <script src="https://kit.fontawesome.com/1f4b1ad491.js" crossorigin="anonymous"></script>
+
+    <!-- bootstrap script -->
+    <script th:src="@{https://code.jquery.com/jquery-3.2.1.slim.min.js}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+</body>
+    </html>
+
+
+

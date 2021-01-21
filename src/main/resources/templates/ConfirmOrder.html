@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hatke cafe</title>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+
+<body class="quicksand">
+
+<div th:insert="homepage::navbar"></div>
+<div th:if="${minAmount}" class="container">
+<h1 style="text-align:center"><i>Thank you for your order!! Have a happy takeaway!!</i></h1>
+    <h3 style="text-align:center">Don't waste time. Check your order status <a th:href="@{/orderDetails/{id}(id=${last.getId()})}">here</a></h3>
+</div>
+<div th:unless="${minAmount}"><p>Please, add min amount of 180.</p></div>
+<div th:insert="homepage::footer"></div><br>
+</body>
+
+
+</html>

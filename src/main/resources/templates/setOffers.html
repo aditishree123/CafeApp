@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Hatke cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+<body>
+<div th:insert="homepage::navbar"></div>
+    <div class="table-wrapper">
+<h1>Set Offer</h1>
+    <form class="main-block" method="post" th:action="@{/setOffers}">
+         <div style="margin-left: 50px">
+        <h4 th:if="${param.error}">Bad credentials</h4>
+        <label for="items" >Food Items(PRESS CTRL+CLICK to select more than one items)</label><br>
+        <select  name="items" id="items"  required multiple>
+            <option th:each="ca: ${items}"  th:value="${ca.getItem()}" th:text="${ca.getItem()}">
+            </option>
+        </select><br>
+
+        <label for="price" >Price(₹)</label><br>
+        <input type="text"  id="price" name="price" required><br>
+
+
+        <label for="description" >Description</label><br>
+             <input type="text" id="description" name="description" required><br><br></div>
+
+        <div class="btn-block">
+            <button type="submit" href="/">SUBMIT</button>
+        </div>
+    </form>
+</div>
+<div th:insert="homepage::footer"></div><br>
+</body>
+</html>

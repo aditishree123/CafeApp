@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hatke cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+
+<body class="quicksand">
+<div th:insert="homepage::navbar"></div>
+
+<div class="table-wrapper">
+<h1><i>Order History</i></h1>
+<table class="fl-table" style="width:100%">
+    <thead><tr>
+        <th>OrderId</th>
+        <th>Status</th>
+        <th>Time</th>
+        <th>Total Amount(₹)</th>
+    </tr></thead>
+    <tr th:each="c : ${orders}">
+        <td><a th:href="@{/orderDetails/{id}(id=${c.id})}" th:text="${c.id}"></a></td>
+        <td th:text="${c.status}"></td>
+        <td th:text="${c.time}"></td>
+        <td th:text="${c.amount}"></td>
+    </tr>
+</table></div>
+<div th:insert="homepage::footer"></div><br>
+</body>
+
+
+</html>

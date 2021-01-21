@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Hatke cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+<body>
+<div th:insert="homepage::navbar"></div><br>
+<div class="main-block">
+    <br>
+<h1>Add Category</h1>
+<form class="addCategory"method="post" th:action="@{/addCategory}" th:object="${category}">
+
+    <h4 th:if="${param.error}">Bad credentials</h4>
+    <input type="text" th:field="*{name}" placeholder="category" required>
+    <input type="text" th:field="*{description}" placeholder="description" required>
+    <input type="text" th:field="*{image}" placeholder="enter link for image" required>
+    <div class="btn-block">
+
+        <button type="submit" >Submit</button>
+    </div>
+</form>
+</div>
+<div th:insert="homepage::footer"></div><br>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="main-block">
+    <img  th:src="@{/images/logo.png}" alt="logo" style="width:150px;height:100px;alignment: center">
+    <h1>Login</h1>
+    <h4 th:if="${param.error}">Bad credentials</h4>
+    <p class="alert alert-danger" th:if="${verification}">Email not verified</p>
+    <form class="login"method="post" th:action="@{/login}" th:object="${user}">
+
+        <label id="icon" for="name"><i class="fas fa-envelope"></i></label>
+        <input type="text" id="name"  th:field="*{email}" placeholder="email" required>
+        <label id="icon" for="pass"><i class="fas fa-unlock-alt"></i></label>
+        <input type="password" id="pass" th:field="*{password}" placeholder="password" required>
+
+        <hr>
+
+        <hr>
+        <div class="btn-block">
+
+            <button type="submit" >Submit</button>
+        </div>
+    </form>
+</div>
+<h3 align="center">New at Hatke?<a href="/register"> Register to proceed</a>.</h3>
+</body>
+</html>
+

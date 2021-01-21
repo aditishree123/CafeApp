@@ -1,0 +1,7 @@
+product table->rating column
+order Details== > if order status==taken away; show five star rating for each product.
+category_item.html==> show rating by taking avg from product table
+
+
+delete an item by deactivating
+cart empty after ordering

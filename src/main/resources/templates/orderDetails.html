@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hatke cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+
+</head>
+
+<body class="quicksand">
+<div th:insert="homepage::navbar"></div>
+<div class="table-wrapper">
+    <h1 style="alignment: center"><i><u>Order Details</u></i></h1>
+<table class="fl-table" style="width:100%">
+    <h4 style="text-align:left;float:left">Order Id :</h4>
+    <h4  style="text-align:left;float:left" th:text="${order.getId()}"></h4><br>
+   <thead> <tr>
+        <th> Name</th>
+        <th>Quantity</th>
+        <th>Price(₹)</th>
+   </tr></thead>
+    <tr th:each="c : ${products}">
+        <td th:text="${c.getItem().getItem()}"></td>
+        <td th:text="${c.getQuantity()}"></td>
+        <td th:text="${c.getQuantity()*(c.getItem().getPrice())}"></td>
+    </tr>
+    <tr th:each="c : ${producto}">
+        <td th:text="${c.getOffer().getDescription()}"></td>
+        <td th:text="${c.getQuantity()}"></td>
+        <td th:text="${c.getQuantity()*(c.getOffer().getPrice())}"></td>
+    </tr>
+</table></div><br>
+
+<div class="table-wrapper">
+<table align="center" class="fl-table" style="width:30%">
+    <thead> <tr>
+        <th>Status</th>
+        <th>Total Price(₹)</th>
+    </tr></thead>
+    <tr >
+        <td align="center" th:text="${order.getStatus()}"></td>
+        <td align="center" th:text="${order.getAmount()}"></td>
+    </tr>
+</table></div><br>
+<div class="table-wrapper"  th:if="${order.getStatus()}=='Received' and ${num}>0">
+<table align="center" class="fl-table" style="width:30%">
+    <thead> <tr>
+        <th>Orders</th>
+        <th>Rate your dishes(out of 10)</th>
+    </tr></thead>
+    <tr  th:each="c : ${products}">
+        <div th:if="${c.rating}==0">
+        <td align="center" th:text="${c.getItem().getItem()}"></td>
+        <td><form  class="cart" method="post" th:action="@{/rate/{id}(id=${c.getId()})}">
+            <h4 th:if="${param.error}">Bad credentials</h4>
+            <input type="number" min="1" max="10"  name="rating" placeholder="enter rating(out of 10)" required><br>
+            <input type="submit" value="Rate"></form></td></div>
+    </tr>
+    <tr th:each="c : ${producto}">
+        <div th:if="${c.rating}==0">
+        <td align="center" th:text="${c.getOffer().getDescription()}"></td>
+        <td><form  class="cart" method="post" th:action="@{/rateO/{id}(id=${c.getId()})}" >
+            <input  type="number" min="1" max="10" name="rating" placeholder="enter rating(out of 10)" required><br>
+            <input type="submit" value="Rate"></form></td>
+        </div>
+    </tr>
+</table></div><br>
+<div class="main-block"  th:if="${order.getStatus()}=='Received' and ${num}==0">
+    <p align="center">You have rated all the dishes!!</p>
+</div>
+</body>
+
+
+</html>

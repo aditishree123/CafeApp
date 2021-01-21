@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Hatke cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+<body>
+<div th:insert="homepage::navbar"></div><br>
+<div class="main-block">
+    <img  th:src="@{/images/logo.png}" alt="logo" style="width:150px;height:100px;alignment: center">
+    <h1>Edit Profile</h1>
+    <form class="registration" th:action="@{/editProfile}" method="POST" >
+        <hr>
+        <label for="email">Email</label><br>
+        <input type="text" id="email" name="email" th:value="${user.email}" required readonly>
+        <hr>
+        <label for="firstname">First Name</label>
+        <input type="text" id="firstname" name="firstname" th:value="${user.firstName}"  required><br>
+        <br><label for="middlename">Middle Name</label>
+        <input type="text" id="middlename" name="middlename" th:value="${user.middleName}"  ><br>
+        <br>
+        <label for="lastname">Last Name</label>
+        <input type="text" id="lastname" name="lastname" th:value="${user.lastName}"   >
+        <hr>
+        <label for="flat">Flat No.</label><br>
+        <input type="text" id="flat" name="flat" th:value="${user.flatNo}"   required><br>
+        <br><label for="landmark">Landmark</label>
+        <input type="text" id="landmark" name="landmark" th:value="${user.landmark}"    required><br>
+        <br><label for="locality">Locality<span>*</span></label>
+        <input type="text" id="locality" name="locality" th:value="${user.locality}"   required>
+        <hr>
+        <label for="contact">Contact Number<span>*</span></label>
+        <input type="text" id="contact" name="contact" th:value="${user.phoneNo}"  required>
+        <hr>
+        <div class="btn-block">
+            <button type="submit" href="/">SUBMIT</button>
+        </div>
+    </form>
+</div>
+<div th:insert="homepage::footer"></div><br>
+</body>
+</html>
+
+
