@@ -124,14 +124,15 @@ public class MenuController {
                     list.add(0);
                 else list.add(cart.getQuantity());
             }
-            List<Integer> list1=new ArrayList<Integer>();
-            for(FoodItem c:items){
-               int d=((c.getPrice())-((c.getPrice()*c.getDiscount())/100));
-               list1.add(d);
-            }
-            model.addAttribute("list1",list1);
-            model.addAttribute("quant",list);
+
         }
+        List<Integer> list1=new ArrayList<Integer>();
+        for(FoodItem c:items){
+            int d=((c.getPrice())-((c.getPrice()*c.getDiscount())/100));
+            list1.add(d);
+        }
+        model.addAttribute("list1",list1);
+       ;
         return "category_item";
     }
 

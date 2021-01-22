@@ -24,7 +24,7 @@ public class HomepageController {
         this.userRepository=userRepository;
     }
 
-    @RequestMapping({"/","","/homepage"})
+    @GetMapping({"/","","/homepage"})
     public String homepage(Model model){
         String loggedInUSerName = securityService.findLoggedInUsername();
         model.addAttribute("user",userService.findByUsername(loggedInUSerName));
