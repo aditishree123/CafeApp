@@ -34,7 +34,7 @@
         </tr></thead>
       <tr th:each="c,iterStat : ${items}">
     <td style="font-family: Dyuthi;color:black;font-size: large" th:text="${c.item}"></td>
-          <td style="font-family: Dyuthi;color:black;font-size: large" th:if="${c.getDiscount()}>0" ><strike th:text="${c.getPrice()}"></strike><br><span th:text="'Offer Price:   '+ ${list1[iterStat.index]}+'₹'"></span></td>
+          <td style="font-family: Dyuthi;color:black;font-size: large" th:if="${c.getDiscount()}>0" ><strike th:text="${c.getPrice()}"></strike><br><span th:text="'Offer Price:   '+ ${((c.getPrice())-((c.getPrice()*c.getDiscount())/100))}+'₹'"></span></td>
     <td style="font-family: Dyuthi;color:black;font-size: large"  th:unless="${c.getDiscount()}>0" th:text="${c.getPrice()}+'₹'"></td>
           <td style="font-family: Dyuthi;color:black;font-size: large" th:text="${c.getDescription()}"></td>
           <td style="font-family: Dyuthi;color:black;font-size: large" th:text="${c.getAvg()}"></td>
