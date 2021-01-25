@@ -107,6 +107,12 @@ public class MenuController {
     public String CategoryItems(@PathVariable("id") int id, Model model){
         List<FoodItem> items=menuService.findAllItems(id);
         model.addAttribute("items",items);
+        List<Integer> list1= new ArrayList<>();
+        for(FoodItem c:items){
+            int d=((c.getPrice())-((c.getPrice()*c.getDiscount())/100));
+            list1.add(d);
+        }
+        model.addAttribute("list1",list1);
         model.addAttribute("category",menuService.findByCategoryId(id));
         String loggedInUSerName = securityService.findLoggedInUsername();
         User user=userService.findByUsername(loggedInUSerName);
@@ -117,7 +123,7 @@ public class MenuController {
             model.addAttribute("user",user);
             model.addAttribute("role",user.getRole());
             model.addAttribute("userid",user.getId());
-            List<Integer> list=new ArrayList<Integer>();
+            List<Integer> list=new ArrayList<>();
             for(FoodItem c:items){
                 Cart cart=cartRepository.findCartById(user.getId(), c.getId());
                 if(cart==null)
@@ -127,12 +133,6 @@ public class MenuController {
             }
 
         }
-        List<Integer> list1=new ArrayList<Integer>();
-        for(FoodItem c:items){
-            int d=((c.getPrice())-((c.getPrice()*c.getDiscount())/100));
-            list1.add(d);
-        }
-        model.addAttribute("list1",list1);
         return "category_item";
     }
 
