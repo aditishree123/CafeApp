@@ -123,6 +123,7 @@ public class MenuController {
                 if(cart==null)
                     list.add(0);
                 else list.add(cart.getQuantity());
+                model.addAttribute("quant",list);
             }
 
         }
@@ -132,7 +133,6 @@ public class MenuController {
             list1.add(d);
         }
         model.addAttribute("list1",list1);
-       ;
         return "category_item";
     }
 
